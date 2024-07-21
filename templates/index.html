@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foody - Your Favorite Food Service</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    <style>
+       /* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: fffff0;
+    color: #fff;
+    padding: 1rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+   
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: rgb(125, 175, 198);
+    
+}
+
+.logo {
+    
+    font-weight: bold;
+    font: italic small-caps bold 20px/2 cursive;
+    color: #9db0ce;
+    
+}
+#wel2 {
+    font: size 100px;
+    font: italic small-caps bold 60px/2 cursive;
+    color: #f5fffa;
+}
+#wel1 , #wel2{
+    display: inline;
+    margin: 0 10px; /* Optional: Add some spacing between the elements */
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    
+}
+
+.nav-links li {
+    margin-left: 2rem;
+}
+
+.nav-links a {
+    color: #d6e1e8;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #cfbfe5;
+}
+
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    /* background-image:url(c:\Users\karth\OneDrive\Desktop\foody1\templates\back1.jpg); */
+    background-color: #b1c9ef;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+}
+
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+section {
+    padding: 4rem 2rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.food-category {
+    margin-bottom: 3rem;
+    
+}
+
+.food-item {
+    background: transparent;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+
+.food-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.food-item h4 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.food-item p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1rem;
+    
+}
+
+.show-details {
+    background-color: #ff7f50;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    display: flex;
+    
+}
+
+.show-details:hover {
+    background-color: #ff4500;
+}
+
+.details {
+    display: none;
+    position: fixed;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 200px;
+    right: 0;
+    top: 100%;
+    z-index: 10;
+    overflow: auto;
+    height: 100px;
+    
+}
+
+.details.active {
+    display: block;
+}
+
+.details ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.details ul li {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.add-to-cart {
+    background-color: #ff7f50;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin-top: 1rem;
+}
+
+.add-to-cart:hover {
+    background-color: #ff4500;
+}
+
+.services img {
+    max-width: 100%;
+    margin-bottom: 1rem;
+}
+
+.delivery-info p {
+    font-size: 1.2rem;
+}
+
+.contact form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+    margin-top: 2rem;
+    
+}
+
+.contact form label {
+    font-size: 1.2rem;
+}
+
+.contact form input,
+.contact form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    
+    
+}
+
+.contact form button {
+    grid-column: span 2;
+    background-color: #ff7f50;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.contact form button:hover {
+    background-color: #ff4500;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-links li {
+        margin: 1rem 0;
+    }
+}
+div.container {
+    background:linear-gradient(100deg,#fffff0 , #f2f8fc ,#fcfcf7,#f4f1f8,#f8f7f4);
+    border-radius: 25px;
+}
+.map{
+    height: 200px;
+    display: grid;
+}
+/* Style the hero section */
+.hero {
+    position: relative; /* Ensure position context for overlay */
+    color: #fff; /* Text color */
+    text-align: center; /* Center-align content */
+    padding: 100px 0; /* Padding top and bottom */
+    background: linear-gradient(360deg, #f0f3fa, #d5deef, #b1c9ef, #8aaee0, #638ecb, #395886); /* Gradient with multiple colors */
+}
+
+/* Style the hero overlay */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Style the hero content */
+.hero-content {
+    z-index: 1; /* Ensure content is above overlay */
+    max-width: 800px; /* Limit width of content */
+    margin: 0 auto; /* Center-align content */
+    color: #fff; /* Text color */
+}
+
+.hero-content h1 {
+    font-size: 3rem; /* Adjust font size of heading */
+}
+
+.hero-content p {
+    font-size: 1.5rem; /* Adjust font size of paragraph */
+    margin-top: 20px; /* Space above paragraph */
+}
+
+.hero-content span {
+    color: #9db0ce; /* Color of the span text */
+}
+.row {
+    background: linear-gradient(45deg, #032030 , #022b42 , #003554 , #004d74 ,#006494, #006da4);
+
+}
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Foody</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#items">Items</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#cart">Cart</a></li>
+            </ul>
+            <span id="cart-badge">0</span>
+        </nav>
+    </header>
+    <div class="row">
+    <section id="home" class="hero">
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <h1>Welcome to <span>Foody</span></h1>
+                <p>Delicious food delivered right to your door</p>
+            </div>
+        </div>
+    </section>
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Us</h2>
+            <p>Foody is dedicated to providing the best quality food and service to our customers.</p>
+        </div>
+    </section>
+    <section id="items" class="items">
+        <div class="container">
+            <h2>Our Menu</h2>
+            <div class="food-category" id="burgers">
+                <h3>Burgers</h3>
+                <div class="food-item card" data-item="Chicken Burger">
+                    <h4>Chicken Burger</h4>
+                    <p>Juicy chicken burger with special sauce.</p>
+                    <button class="show-details">Show Variants</button>
+                    <div class="details">
+                        <h5>Variants:</h5>
+                        <ul>
+                            <li>Specialty Burger</li>
+                            <li>Cheese Burger</li>
+                            <li>Bacon Burger</li>
+                        </ul>
+                    </div>
+                    <button class="add-to-cart" data-item="Chicken Burger">Add to Cart</button>
+                </div>
+            </div>
+            <div class="food-category" id="biryani">
+                <h3>Biryani</h3>
+                <div class="food-item card" data-item="Lucknowi Biryani">
+                    <h4>Lucknowi Biryani</h4>
+                    <p>Lucknowi biryani, also known as Awadhi biryani, originates in Northern India and uses spices like anise, cinnamon, and saffron.</p>
+                    <button class="show-details">Show Variants</button>
+                    <div class="details">
+                        <h5>Variants:</h5>
+                        <ul>
+                            <li>Kolkata Biryani</li>
+                            <li>Sindhi Biryani</li>
+                            <li>Memoni Biryani</li>
+                            <li>Malabar Biryani</li>
+                            <li>Thalassery Biryani</li>
+                            <li>Ambur Biryani</li>
+                            <li>Dindigul Biryani</li>
+                        </ul>
+                    </div>
+                    <button class="add-to-cart" data-item="Lucknowi Biryani">Add to Cart</button>
+                </div>
+            </div>
+            <div class="food-category" id="shawarma">
+                <h3>Shawarma</h3>
+                <div class="food-item card" data-item="Chicken Shawarma">
+                    <h4>Chicken Shawarma</h4>
+                    <p>Delicious chicken shawarma with a blend of spices.</p>
+                    <button class="show-details">Show Variants</button>
+                    <div class="details">
+                        <h5>Variants:</h5>
+                        <ul>
+                            <li>Beef Shawarma</li>
+                            <li>Veal Shawarma</li>
+                            <li>Lamb Shawarma</li>
+                            <li>Turkey Shawarma</li>
+                            <li>Creamy Homemade Hummus</li>
+                        </ul>
+                    </div>
+                    <button class="add-to-cart" data-item="Chicken Shawarma">Add to Cart</button>
+                </div>
+            </div>
+            <div class="food-category" id="pizza">
+                <h3>Pizza</h3>
+                <div class="food-item card" data-item="Neapolitan Pizza">
+                    <h4>Neapolitan Pizza</h4>
+                    <p>Begin your pizza education with the pie that started it all: the Neapolitan.</p>
+                    <button class="show-details">Show Variants</button>
+                    <div class="details">
+                        <h5>Variants:</h5>
+                        <ul>
+                            <li>New York Style Pizza</li>
+                            <li>Chicago Deep-Dish Pizza</li>
+                            <li>Margherita Pizza</li>
+                            <li>Sicilian Pizza</li>
+                            <li>Hawaiian Pizza</li>
+                            <li>California Pizza</li>
+                            <li>Greek Pizza</li>
+                        </ul>
+                    </div>
+                    <button class="add-to-cart" data-item="Neapolitan Pizza">Add to Cart</button>
+                </div>
+            </div>
+            <div class="food-category" id="icecream">
+                <h3>Ice Cream</h3>
+                <div class="food-item card" data-item="Hard Custard Ice Cream">
+                    <h4>Hard Custard Ice Cream</h4>
+                    <p>Rich and creamy hard custard ice cream.</p>
+                    <button class="show-details">Show Variants</button>
+                    <div class="details">
+                        <h5>Variants:</h5>
+                        <ul>
+                            <li>Gelato</li>
+                            <li>New England Ice Cream</li>
+                            <li>Philadelphia Ice Cream</li>
+                            <li>Midwestern Frozen Custard</li>
+                            <li>Frozen Yogurt</li>
+                            <li>Sorbet</li>
+                            <li>Italian Ice</li>
+                        </ul>
+                    </div>
+                    <button class="add-to-cart" data-item="Hard Custard Ice Cream">Add to Cart</button>
+                </div>
+            </div>
+            <div class="food-category" id="coffee">
+                <h3>Coffee</h3>
+                <div class="food-item card" data-item="Espresso">
+                    <h4>Espresso</h4>
+                    <p>Strong and aromatic espresso shot.</p>
+                    <button class="show-details">Show Variants</button>
+                    <div class="details">
+                        <h5>Variants:</h5>
+                        <ul>
+                            <li>Espresso & Coffee</li>
+                            <li>Cold Brew</li>
+                            <li>Cappuccino</li>
+                            <li>Mocha</li>
+                            <li>Iced Coffees</li>
+                            <li>Lattes</li>
+                            <li>Breve</li>
+                        </ul>
+                    </div>
+                    <button class="add-to-cart" data-item="Espresso">Add to Cart</button>
+                </div>
+            <!-- Rest of food categories omitted for brevity -->
+        </div>
+    </section>
+
+    <section id="cart" class="services">
+        <div class="container">
+            <h2>Your Cart</h2>
+            <ul id="cart-items">
+                <!-- Example item in cart -->
+                <li>
+                    <span>Item Name</span>
+                    <span>Price</span>
+                    <form action="/remove-from-cart" method="post">
+                        <input type="hidden" name="item_id" value="item_id_here">
+                        <button type="submit">Remove from Cart</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Our Services</h2>
+            <img src="map.jpg" alt="Delivery Map" class="map">
+            <div class="delivery-info">
+                <p>Delivery Boy: Karthik_04_d</p>
+                <p>Phone: (123) 456-7890</p>
+            </div>
+        </div>
+    </section>
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+</div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Animate the hero section
+            gsap.from(".hero-content h1", { duration: 1, y: -50, opacity: 0, ease: "power1.in" });
+            gsap.from(".hero-content p", { duration: 1, y: 50, opacity: 0, delay: 0.5, ease: "power1.out" });
+
+            // Scroll-triggered animations for other sections
+            gsap.registerPlugin(ScrollTrigger);
+
+            gsap.from("#about .container", {
+                scrollTrigger: {
+                    trigger: "#about",
+                    start: "top 80%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+            });
+
+            gsap.from("#items .container", {
+                scrollTrigger: {
+                    trigger: "#items",
+                    start: "top 80%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+            });
+
+            gsap.from("#contact .container", {
+                scrollTrigger: {
+                    trigger: "#contact",
+                    start: "top 80%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+            });
+
+            // Add to cart functionality
+            let cart = [];
+            const cartItems = document.getElementById("cart-items");
+            const cartBadge = document.getElementById("cart-badge");
+
+            document.querySelectorAll(".add-to-cart").forEach(button => {
+                button.addEventListener("click", () => {
+                    const item = button.dataset.item;
+                    cart.push(item);
+                    updateCart();
+                });
+            });
+
+            function updateCart() {
+                cartItems.innerHTML = "";
+                cart.forEach(item => {
+                    const li = document.createElement("li");
+                    li.textContent = item;
+                    cartItems.appendChild(li);
+                });
+                cartBadge.textContent = cart.length;
+            }
+
+            // Show details functionality
+            document.querySelectorAll(".show-details").forEach(button => {
+                button.addEventListener("click", () => {
+                    const details = button.nextElementSibling;
+                    if (details.style.display === "none" || details.style.display === "") {
+                        details.style.display = "block";
+                    } else {
+                        details.style.display = "none";
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
